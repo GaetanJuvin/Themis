@@ -1,0 +1,8 @@
+{
+  "hooks": [
+    {
+      "event": "on_session_start",
+      "script": "echo 'OK'"
+    }
+  ]
+}
