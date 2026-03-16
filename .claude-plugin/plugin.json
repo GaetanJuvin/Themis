@@ -1,7 +1,7 @@
 {
-  "name": "sibyl",
+  "name": "themis",
   "version": "0.1.0",
   "description": "QA contract framework — protects pages, features, and components from unintended changes during vibe coding",
   "author": "GaetanJuvin",
-  "repository": "https://github.com/GaetanJuvin/Sibyl"
+  "repository": "https://github.com/GaetanJuvin/Themis"
 }

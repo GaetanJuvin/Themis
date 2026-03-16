@@ -1,6 +1,6 @@
 ---
-name: sibyl-amend
-description: Use when a Sibyl contract violation was flagged and the developer wants to update the contract to reflect an intentional change. Triggers on "amend contract", "update contract", "sibyl amend", or after a /sibyl-check violation.
+name: themis-amend
+description: Use when a Themis contract violation was flagged and the developer wants to update the contract to reflect an intentional change. Triggers on "amend contract", "update contract", "themis amend", or after a /themis-check violation.
 ---
 
 ## Overview
@@ -11,12 +11,12 @@ Proposes a contract update when a violation represents an intentional change rat
 
 ### Step 1: Identify the contract
 
-If called after a `/sibyl-check` violation:
+If called after a `/themis-check` violation:
 - Use the contract and clause from the violation context
 
 If called standalone:
 - Ask: "Which contract needs updating?"
-- List contracts from `sibyl-qa/INDEX.md`
+- List contracts from `themis-qa/INDEX.md`
 - Or accept a direct path
 
 ### Step 2: Show current state
@@ -28,9 +28,9 @@ Display the current contract clause(s) that need updating.
 Based on the code changes (from git diff), propose updated clause text:
 
 ```
-📝 Sibyl Amendment Proposal
+📝 Themis Amendment Proposal
 
-Contract: sibyl-qa/pages/auth/login/login.contract.md
+Contract: themis-qa/pages/auth/login/login.contract.md
 
 Current clause (Behavior #2):
   "Submitting with invalid credentials shows inline error message"
@@ -61,7 +61,7 @@ Ask: "Accept this amendment?"
 
 ```
 ✅ Contract amended and locked.
-   sibyl-qa/pages/auth/login/login.contract.md
+   themis-qa/pages/auth/login/login.contract.md
    Updated: Behavior #2
 ```
 

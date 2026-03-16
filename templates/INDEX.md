@@ -1,6 +1,6 @@
-# Sibyl Contract Index
+# Themis Contract Index
 
-<!-- This file maps paths to contract files. Updated automatically by /sibyl-generate. -->
+<!-- This file maps paths to contract files. Updated automatically by /themis-generate. -->
 
 ## Global
 

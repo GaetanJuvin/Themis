@@ -1,10 +1,10 @@
-# Sibyl Implementation Plan
+# Themis Implementation Plan
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Build Sibyl as a Claude Code plugin that provides QA contract skills for protecting pages/features/components during vibe coding.
+**Goal:** Build Themis as a Claude Code plugin that provides QA contract skills for protecting pages/features/components during vibe coding.
 
-**Architecture:** Sibyl is a Claude Code plugin with 5 skills and 5 matching commands. Skills contain the AI logic (contract generation, validation, amendment). Commands are user-facing `/slash-commands` that invoke skills. Contract files are `.contract.md` (Markdown with YAML frontmatter). Everything lives in a `sibyl-qa/` directory within the target project.
+**Architecture:** Themis is a Claude Code plugin with 5 skills and 5 matching commands. Skills contain the AI logic (contract generation, validation, amendment). Commands are user-facing `/slash-commands` that invoke skills. Contract files are `.contract.md` (Markdown with YAML frontmatter). Everything lives in a `themis-qa/` directory within the target project.
 
 **Tech Stack:** Claude Code plugin system (SKILL.md + commands), Markdown with YAML frontmatter, GitHub Actions for CI.
 
@@ -14,20 +14,20 @@
 
 ### Task 1: Design Doc (already complete)
 
-The design doc exists at `docs/plans/2026-03-15-sibyl-design.md`.
+The design doc exists at `docs/plans/2026-03-15-themis-design.md`.
 
 **Step 1: Commit the design doc**
 
 ```bash
-git add docs/plans/2026-03-15-sibyl-design.md
-git commit -m "docs: add Sibyl QA contract framework design doc"
+git add docs/plans/2026-03-15-themis-design.md
+git commit -m "docs: add Themis QA contract framework design doc"
 ```
 
 ---
 
 ### Task 2: Plugin Scaffolding
 
-Create the Claude Code plugin structure so Sibyl can be installed as a plugin.
+Create the Claude Code plugin structure so Themis can be installed as a plugin.
 
 **Files:**
 - Create: `.claude-plugin/plugin.json`
@@ -39,11 +39,11 @@ Create `.claude-plugin/plugin.json`:
 
 ```json
 {
-  "name": "sibyl",
+  "name": "themis",
   "version": "0.1.0",
   "description": "QA contract framework — protects pages, features, and components from unintended changes during vibe coding",
   "author": "GaetanJuvin",
-  "repository": "https://github.com/GaetanJuvin/Sibyl"
+  "repository": "https://github.com/GaetanJuvin/Themis"
 }
 ```
 
@@ -73,20 +73,20 @@ git commit -m "feat: scaffold Claude Code plugin structure"
 
 ### Task 3: Contract Templates
 
-Create template files that `/sibyl-init` will use when scaffolding a project.
+Create template files that `/themis-init` will use when scaffolding a project.
 
 **Files:**
-- Create: `templates/sibyl.config.md`
+- Create: `templates/themis.config.md`
 - Create: `templates/INDEX.md`
 - Create: `templates/contract.template.md`
 
-**Step 1: Create sibyl.config.md template**
+**Step 1: Create themis.config.md template**
 
-Create `templates/sibyl.config.md`:
+Create `templates/themis.config.md`:
 
 ```markdown
 ---
-name: Sibyl QA
+name: Themis QA
 version: 1.0
 ---
 
@@ -111,9 +111,9 @@ version: 1.0
 
 Instructions for AI assistants working in this codebase:
 
-- Always read `sibyl-qa/INDEX.md` before making changes
+- Always read `themis-qa/INDEX.md` before making changes
 - Cross-reference modified files against contract paths
-- Never modify a locked contract without running `/sibyl-amend`
+- Never modify a locked contract without running `/themis-amend`
 - When generating new contracts, always update `INDEX.md`
 ```
 
@@ -122,9 +122,9 @@ Instructions for AI assistants working in this codebase:
 Create `templates/INDEX.md`:
 
 ```markdown
-# Sibyl Contract Index
+# Themis Contract Index
 
-<!-- This file maps paths to contract files. Updated automatically by /sibyl-generate. -->
+<!-- This file maps paths to contract files. Updated automatically by /themis-generate. -->
 
 ## Global
 
@@ -193,16 +193,16 @@ Create the project CLAUDE.md with development instructions for contributors.
 Create `CLAUDE.md`:
 
 ```markdown
-# Sibyl
+# Themis
 
 QA contract framework for protecting pages, features, and components during vibe coding.
 
 ## Project Structure
 
 - `.claude-plugin/` — Claude Code plugin config (plugin.json, hooks.json)
-- `skills/` — Sibyl skills (SKILL.md files)
+- `skills/` — Themis skills (SKILL.md files)
 - `commands/` — User-facing slash commands
-- `templates/` — Template files used by /sibyl-init
+- `templates/` — Template files used by /themis-init
 - `docs/plans/` — Design docs and implementation plans
 
 ## Skills
@@ -211,22 +211,22 @@ Each skill lives in `skills/<skill-name>/SKILL.md`. Skills are the AI logic.
 
 | Skill | Command | Purpose |
 |-------|---------|---------|
-| `sibyl-init` | `/sibyl-init` | Interactive project setup |
-| `sibyl-generate` | `/sibyl-generate` | Create contracts from prompts/docs/screenshots |
-| `sibyl-check` | `/sibyl-check` | Validate changes against locked contracts |
-| `sibyl-amend` | `/sibyl-amend` | Propose contract updates after violations |
-| `sibyl-scan` | `/sibyl-scan` | Auto-generate baseline contracts from existing code |
+| `themis-init` | `/themis-init` | Interactive project setup |
+| `themis-generate` | `/themis-generate` | Create contracts from prompts/docs/screenshots |
+| `themis-check` | `/themis-check` | Validate changes against locked contracts |
+| `themis-amend` | `/themis-amend` | Propose contract updates after violations |
+| `themis-scan` | `/themis-scan` | Auto-generate baseline contracts from existing code |
 
 ## Contract Format
 
-Contracts are `.contract.md` files with YAML frontmatter + Visual/Behavior/Data/Rules sections. See `docs/plans/2026-03-15-sibyl-design.md` for full spec.
+Contracts are `.contract.md` files with YAML frontmatter + Visual/Behavior/Data/Rules sections. See `docs/plans/2026-03-15-themis-design.md` for full spec.
 
 ## Development
 
-- Follow the design doc at `docs/plans/2026-03-15-sibyl-design.md`
+- Follow the design doc at `docs/plans/2026-03-15-themis-design.md`
 - Skills must have `name` and `description` in frontmatter only (max 1024 chars total)
 - Skill descriptions start with "Use when..."
-- Commands reference skills with "Invoke the sibyl:<skill-name> skill"
+- Commands reference skills with "Invoke the themis:<skill-name> skill"
 ```
 
 **Step 2: Commit**
@@ -259,27 +259,27 @@ git checkout -b feat/skills
 
 ---
 
-### Task 6: /sibyl-init skill + command
+### Task 6: /themis-init skill + command
 
-The setup skill that scaffolds `sibyl-qa/` in a target project.
+The setup skill that scaffolds `themis-qa/` in a target project.
 
 **Files:**
-- Create: `skills/sibyl-init/SKILL.md`
-- Create: `commands/sibyl-init.md`
+- Create: `skills/themis-init/SKILL.md`
+- Create: `commands/themis-init.md`
 
 **Step 1: Create the skill**
 
-Create `skills/sibyl-init/SKILL.md`:
+Create `skills/themis-init/SKILL.md`:
 
 ```markdown
 ---
-name: sibyl-init
-description: Use when setting up Sibyl QA contracts in a project for the first time. Scaffolds sibyl-qa/ directory, config, and INDEX.md. Triggers on "set up sibyl", "initialize contracts", "add QA contracts".
+name: themis-init
+description: Use when setting up Themis QA contracts in a project for the first time. Scaffolds themis-qa/ directory, config, and INDEX.md. Triggers on "set up themis", "initialize contracts", "add QA contracts".
 ---
 
 ## Overview
 
-Interactive setup that scaffolds the `sibyl-qa/` directory structure in the current project.
+Interactive setup that scaffolds the `themis-qa/` directory structure in the current project.
 
 ## Flow
 
@@ -294,8 +294,8 @@ Interactive setup that scaffolds the `sibyl-qa/` directory structure in the curr
 
    **Web:**
    ```
-   sibyl-qa/
-   ├── sibyl.config.md
+   themis-qa/
+   ├── themis.config.md
    ├── INDEX.md
    ├── global/
    ├── pages/
@@ -305,8 +305,8 @@ Interactive setup that scaffolds the `sibyl-qa/` directory structure in the curr
 
    **Mobile:**
    ```
-   sibyl-qa/
-   ├── sibyl.config.md
+   themis-qa/
+   ├── themis.config.md
    ├── INDEX.md
    ├── global/
    ├── screens/
@@ -316,8 +316,8 @@ Interactive setup that scaffolds the `sibyl-qa/` directory structure in the curr
 
    **API:**
    ```
-   sibyl-qa/
-   ├── sibyl.config.md
+   themis-qa/
+   ├── themis.config.md
    ├── INDEX.md
    ├── global/
    ├── api/
@@ -326,8 +326,8 @@ Interactive setup that scaffolds the `sibyl-qa/` directory structure in the curr
 
    **Universal:**
    ```
-   sibyl-qa/
-   ├── sibyl.config.md
+   themis-qa/
+   ├── themis.config.md
    ├── INDEX.md
    ├── global/
    ├── pages/
@@ -337,71 +337,71 @@ Interactive setup that scaffolds the `sibyl-qa/` directory structure in the curr
    └── components/
    ```
 
-5. **Generate `sibyl.config.md`** from template with user's answers
+5. **Generate `themis.config.md`** from template with user's answers
 
 6. **Generate empty `INDEX.md`** from template
 
-7. **Add Sibyl instructions to project's CLAUDE.md:**
+7. **Add Themis instructions to project's CLAUDE.md:**
    Append this block:
    ```markdown
-   ## Sibyl QA Contracts
+   ## Themis QA Contracts
 
-   This project uses Sibyl QA contracts. Before making changes:
+   This project uses Themis QA contracts. Before making changes:
 
-   - Read `sibyl-qa/INDEX.md` to know which contracts exist
+   - Read `themis-qa/INDEX.md` to know which contracts exist
    - Cross-reference modified files against contract paths
-   - Never modify a locked contract without running `/sibyl-amend`
+   - Never modify a locked contract without running `/themis-amend`
    - If your change would break a locked contract, stop and flag it
-   - Use `/sibyl-generate` to create new contracts
-   - Use `/sibyl-check` to validate changes against contracts
+   - Use `/themis-generate` to create new contracts
+   - Use `/themis-check` to validate changes against contracts
    ```
 
-8. **Confirm**: "Sibyl is set up. Use `/sibyl-generate` to create your first contract."
+8. **Confirm**: "Themis is set up. Use `/themis-generate` to create your first contract."
 
 ## Important
 
-- If `sibyl-qa/` already exists, warn and ask before overwriting
+- If `themis-qa/` already exists, warn and ask before overwriting
 - Create directories using mkdir, not by writing placeholder files
 - Use today's date in generated config
 ```
 
 **Step 2: Create the command**
 
-Create `commands/sibyl-init.md`:
+Create `commands/themis-init.md`:
 
 ```markdown
 ---
 disable-model-invocation: true
 ---
 
-Invoke the sibyl:sibyl-init skill to set up Sibyl QA contracts in this project.
+Invoke the themis:themis-init skill to set up Themis QA contracts in this project.
 ```
 
 **Step 3: Commit**
 
 ```bash
-git add skills/sibyl-init/ commands/sibyl-init.md
-git commit -m "feat: add /sibyl-init skill and command"
+git add skills/themis-init/ commands/themis-init.md
+git commit -m "feat: add /themis-init skill and command"
 ```
 
 ---
 
-### Task 7: /sibyl-generate skill + command
+### Task 7: /themis-generate skill + command
 
 The core contract creation skill.
 
 **Files:**
-- Create: `skills/sibyl-generate/SKILL.md`
-- Create: `commands/sibyl-generate.md`
+- Create: `skills/themis-generate/SKILL.md`
+- Create: `commands/themis-generate.md`
 
 **Step 1: Create the skill**
 
-Create `skills/sibyl-generate/SKILL.md`:
+Create `skills/themis-generate/SKILL.md`:
 
 ```markdown
 ---
-name: sibyl-generate
-description: Use when creating a new QA contract for a page, API endpoint, component, or feature. Accepts natural language prompts, shaping documents, screenshots, or any mix. Triggers on "create contract", "add contract", "define contract", "sibyl generate".
+name: themis-generate
+description: Use when creating a new QA contract for a page, API endpoint, component, or feature. Accepts natural language prompts, shaping documents, screenshots, or any mix. Triggers on "create contract", "add contract", "define contract", "themis generate".
 ---
 
 ## Overview
@@ -412,8 +412,8 @@ Generates a `.contract.md` file from natural language input, shaping documents, 
 
 ### Step 1: Verify setup
 
-- Check that `sibyl-qa/` exists. If not: "Sibyl isn't set up yet. Run `/sibyl-init` first."
-- Read `sibyl-qa/sibyl.config.md` to get platform and conventions.
+- Check that `themis-qa/` exists. If not: "Themis isn't set up yet. Run `/themis-init` first."
+- Read `themis-qa/themis.config.md` to get platform and conventions.
 
 ### Step 2: Determine contract type
 
@@ -439,12 +439,12 @@ If the input is thin, ask follow-up questions ONE AT A TIME:
 ### Step 4: Determine path
 
 Based on contract type and platform:
-- **page (web)**: Ask for URL path → `sibyl-qa/pages/<path>/`
-- **page (mobile)**: Ask for screen route → `sibyl-qa/screens/<route>/`
-- **api**: Ask for method + endpoint → `sibyl-qa/api/<path>/<method>.contract.md`
-- **component**: Ask for name → `sibyl-qa/components/<name>.contract.md`
-- **feature**: Ask for name → `sibyl-qa/features/<name>.contract.md`
-- **global**: Ask for name → `sibyl-qa/global/<name>.contract.md`
+- **page (web)**: Ask for URL path → `themis-qa/pages/<path>/`
+- **page (mobile)**: Ask for screen route → `themis-qa/screens/<route>/`
+- **api**: Ask for method + endpoint → `themis-qa/api/<path>/<method>.contract.md`
+- **component**: Ask for name → `themis-qa/components/<name>.contract.md`
+- **feature**: Ask for name → `themis-qa/features/<name>.contract.md`
+- **global**: Ask for name → `themis-qa/global/<name>.contract.md`
 
 ### Step 5: Generate contract
 
@@ -459,7 +459,7 @@ Omit sections that don't apply (e.g., no Visual for API contracts, no Data for p
 
 ### Step 6: Update INDEX.md
 
-Add an entry to `sibyl-qa/INDEX.md` under the appropriate section.
+Add an entry to `themis-qa/INDEX.md` under the appropriate section.
 
 ### Step 7: Review and lock
 
@@ -482,41 +482,41 @@ If the user describes something that spans multiple contracts (e.g., "the login 
 
 **Step 2: Create the command**
 
-Create `commands/sibyl-generate.md`:
+Create `commands/themis-generate.md`:
 
 ```markdown
 ---
 disable-model-invocation: true
 ---
 
-Invoke the sibyl:sibyl-generate skill to create a new QA contract.
+Invoke the themis:themis-generate skill to create a new QA contract.
 ```
 
 **Step 3: Commit**
 
 ```bash
-git add skills/sibyl-generate/ commands/sibyl-generate.md
-git commit -m "feat: add /sibyl-generate skill and command"
+git add skills/themis-generate/ commands/themis-generate.md
+git commit -m "feat: add /themis-generate skill and command"
 ```
 
 ---
 
-### Task 8: /sibyl-check skill + command
+### Task 8: /themis-check skill + command
 
 The validation skill that checks changes against locked contracts.
 
 **Files:**
-- Create: `skills/sibyl-check/SKILL.md`
-- Create: `commands/sibyl-check.md`
+- Create: `skills/themis-check/SKILL.md`
+- Create: `commands/themis-check.md`
 
 **Step 1: Create the skill**
 
-Create `skills/sibyl-check/SKILL.md`:
+Create `skills/themis-check/SKILL.md`:
 
 ```markdown
 ---
-name: sibyl-check
-description: Use when validating code changes against locked Sibyl QA contracts. Run before completing work, before commits, or in CI. Triggers on "check contracts", "validate contracts", "sibyl check", or when about to complete a task in a project with sibyl-qa/.
+name: themis-check
+description: Use when validating code changes against locked Themis QA contracts. Run before completing work, before commits, or in CI. Triggers on "check contracts", "validate contracts", "themis check", or when about to complete a task in a project with themis-qa/.
 ---
 
 ## Overview
@@ -527,7 +527,7 @@ Validates current code changes against all locked contracts. Reads the diff, cro
 
 ### Step 1: Load contracts
 
-- Read `sibyl-qa/INDEX.md` to get all contract paths
+- Read `themis-qa/INDEX.md` to get all contract paths
 - Read each referenced contract file
 - Filter to `status: locked` contracts only (skip draft/deprecated)
 
@@ -564,14 +564,14 @@ For each matched contract, check every clause:
 
 **No violations found:**
 ```
-✅ Sibyl: All contracts satisfied. X contracts checked, 0 violations.
+✅ Themis: All contracts satisfied. X contracts checked, 0 violations.
 ```
 
 **Violations found — format per violation:**
 ```
-⚠️ Sibyl: Contract violation detected.
+⚠️ Themis: Contract violation detected.
 
-Contract: sibyl-qa/pages/auth/login/login.contract.md
+Contract: themis-qa/pages/auth/login/login.contract.md
 Clause:   [Section] #[number] — "[clause text]"
 Priority: [critical|high|medium|low]
 
@@ -580,7 +580,7 @@ What breaks: [description of what contract clause is violated]
 
 Options:
 1. Revert this change and find another approach
-2. /sibyl-amend to propose updating the contract
+2. /themis-amend to propose updating the contract
 ```
 
 ### Step 6: Enforce based on priority
@@ -603,41 +603,41 @@ When running in CI (detected by CI environment variable or explicit flag):
 
 **Step 2: Create the command**
 
-Create `commands/sibyl-check.md`:
+Create `commands/themis-check.md`:
 
 ```markdown
 ---
 disable-model-invocation: true
 ---
 
-Invoke the sibyl:sibyl-check skill to validate current changes against locked QA contracts.
+Invoke the themis:themis-check skill to validate current changes against locked QA contracts.
 ```
 
 **Step 3: Commit**
 
 ```bash
-git add skills/sibyl-check/ commands/sibyl-check.md
-git commit -m "feat: add /sibyl-check skill and command"
+git add skills/themis-check/ commands/themis-check.md
+git commit -m "feat: add /themis-check skill and command"
 ```
 
 ---
 
-### Task 9: /sibyl-amend skill + command
+### Task 9: /themis-amend skill + command
 
 The amendment skill for updating contracts after intentional changes.
 
 **Files:**
-- Create: `skills/sibyl-amend/SKILL.md`
-- Create: `commands/sibyl-amend.md`
+- Create: `skills/themis-amend/SKILL.md`
+- Create: `commands/themis-amend.md`
 
 **Step 1: Create the skill**
 
-Create `skills/sibyl-amend/SKILL.md`:
+Create `skills/themis-amend/SKILL.md`:
 
 ```markdown
 ---
-name: sibyl-amend
-description: Use when a Sibyl contract violation was flagged and the developer wants to update the contract to reflect an intentional change. Triggers on "amend contract", "update contract", "sibyl amend", or after a /sibyl-check violation.
+name: themis-amend
+description: Use when a Themis contract violation was flagged and the developer wants to update the contract to reflect an intentional change. Triggers on "amend contract", "update contract", "themis amend", or after a /themis-check violation.
 ---
 
 ## Overview
@@ -648,12 +648,12 @@ Proposes a contract update when a violation represents an intentional change rat
 
 ### Step 1: Identify the contract
 
-If called after a `/sibyl-check` violation:
+If called after a `/themis-check` violation:
 - Use the contract and clause from the violation context
 
 If called standalone:
 - Ask: "Which contract needs updating?"
-- List contracts from `sibyl-qa/INDEX.md`
+- List contracts from `themis-qa/INDEX.md`
 - Or accept a direct path
 
 ### Step 2: Show current state
@@ -665,9 +665,9 @@ Display the current contract clause(s) that need updating.
 Based on the code changes (from git diff), propose updated clause text:
 
 ```
-📝 Sibyl Amendment Proposal
+📝 Themis Amendment Proposal
 
-Contract: sibyl-qa/pages/auth/login/login.contract.md
+Contract: themis-qa/pages/auth/login/login.contract.md
 
 Current clause (Behavior #2):
   "Submitting with invalid credentials shows inline error message"
@@ -698,7 +698,7 @@ Ask: "Accept this amendment?"
 
 ```
 ✅ Contract amended and locked.
-   sibyl-qa/pages/auth/login/login.contract.md
+   themis-qa/pages/auth/login/login.contract.md
    Updated: Behavior #2
 ```
 
@@ -715,41 +715,41 @@ If the code change introduces new behavior not covered by any clause:
 
 **Step 2: Create the command**
 
-Create `commands/sibyl-amend.md`:
+Create `commands/themis-amend.md`:
 
 ```markdown
 ---
 disable-model-invocation: true
 ---
 
-Invoke the sibyl:sibyl-amend skill to propose updating a QA contract after an intentional change.
+Invoke the themis:themis-amend skill to propose updating a QA contract after an intentional change.
 ```
 
 **Step 3: Commit**
 
 ```bash
-git add skills/sibyl-amend/ commands/sibyl-amend.md
-git commit -m "feat: add /sibyl-amend skill and command"
+git add skills/themis-amend/ commands/themis-amend.md
+git commit -m "feat: add /themis-amend skill and command"
 ```
 
 ---
 
-### Task 10: /sibyl-scan skill + command
+### Task 10: /themis-scan skill + command
 
 The auto-generation skill that creates baseline contracts from existing code.
 
 **Files:**
-- Create: `skills/sibyl-scan/SKILL.md`
-- Create: `commands/sibyl-scan.md`
+- Create: `skills/themis-scan/SKILL.md`
+- Create: `commands/themis-scan.md`
 
 **Step 1: Create the skill**
 
-Create `skills/sibyl-scan/SKILL.md`:
+Create `skills/themis-scan/SKILL.md`:
 
 ```markdown
 ---
-name: sibyl-scan
-description: Use when generating baseline QA contracts from an existing codebase. Scans code to identify pages, API endpoints, and components, then generates draft contracts. Triggers on "scan codebase", "generate baseline contracts", "sibyl scan".
+name: themis-scan
+description: Use when generating baseline QA contracts from an existing codebase. Scans code to identify pages, API endpoints, and components, then generates draft contracts. Triggers on "scan codebase", "generate baseline contracts", "themis scan".
 ---
 
 ## Overview
@@ -760,8 +760,8 @@ Auto-generates draft contracts by scanning the existing codebase. Identifies pag
 
 ### Step 1: Verify setup
 
-- Check that `sibyl-qa/` exists. If not: "Sibyl isn't set up yet. Run `/sibyl-init` first."
-- Read `sibyl-qa/sibyl.config.md` to get platform and conventions.
+- Check that `themis-qa/` exists. If not: "Themis isn't set up yet. Run `/themis-init` first."
+- Read `themis-qa/themis.config.md` to get platform and conventions.
 
 ### Step 2: Scan the codebase
 
@@ -788,7 +788,7 @@ Based on platform, look for:
 Show what was found:
 
 ```
-📋 Sibyl Scan Results
+📋 Themis Scan Results
 
 Found:
   Pages: 12
@@ -815,7 +815,7 @@ For each selected item:
    - Data: API calls, request/response shapes, props
    - Rules: Infer MUST/MUST NOT from critical paths (auth, payments, etc.)
 3. Generate `.contract.md` as `status: draft`
-4. Update `sibyl-qa/INDEX.md`
+4. Update `themis-qa/INDEX.md`
 
 ### Step 5: Review cycle
 
@@ -838,21 +838,21 @@ Ask which mode before starting: "Quick scan (paths only) or deep scan (full anal
 
 **Step 2: Create the command**
 
-Create `commands/sibyl-scan.md`:
+Create `commands/themis-scan.md`:
 
 ```markdown
 ---
 disable-model-invocation: true
 ---
 
-Invoke the sibyl:sibyl-scan skill to auto-generate baseline QA contracts from the existing codebase.
+Invoke the themis:themis-scan skill to auto-generate baseline QA contracts from the existing codebase.
 ```
 
 **Step 3: Commit**
 
 ```bash
-git add skills/sibyl-scan/ commands/sibyl-scan.md
-git commit -m "feat: add /sibyl-scan skill and command"
+git add skills/themis-scan/ commands/themis-scan.md
+git commit -m "feat: add /themis-scan skill and command"
 ```
 
 ---
@@ -868,28 +868,28 @@ git push -u origin feat/skills
 **Step 2: Create PR**
 
 ```bash
-gh pr create --title "feat: add Sibyl skills and commands" --body "$(cat <<'EOF'
+gh pr create --title "feat: add Themis skills and commands" --body "$(cat <<'EOF'
 ## Summary
-- Add 5 Sibyl skills: /sibyl-init, /sibyl-generate, /sibyl-check, /sibyl-amend, /sibyl-scan
+- Add 5 Themis skills: /themis-init, /themis-generate, /themis-check, /themis-amend, /themis-scan
 - Add matching slash commands for each skill
 - Skills handle contract creation, validation, amendment, and codebase scanning
 
 ## Skills
 | Skill | Purpose |
 |-------|---------|
-| `/sibyl-init` | Interactive project setup — scaffolds sibyl-qa/ directory |
-| `/sibyl-generate` | Create contracts from prompts, docs, or screenshots |
-| `/sibyl-check` | Validate code changes against locked contracts |
-| `/sibyl-amend` | Update contracts after intentional changes |
-| `/sibyl-scan` | Auto-generate baseline contracts from existing code |
+| `/themis-init` | Interactive project setup — scaffolds themis-qa/ directory |
+| `/themis-generate` | Create contracts from prompts, docs, or screenshots |
+| `/themis-check` | Validate code changes against locked contracts |
+| `/themis-amend` | Update contracts after intentional changes |
+| `/themis-scan` | Auto-generate baseline contracts from existing code |
 
 ## Test plan
 - [ ] Install plugin and verify skills appear in Claude Code
-- [ ] Run /sibyl-init and verify directory structure created
-- [ ] Run /sibyl-generate with a prompt and verify contract created
-- [ ] Make a change that violates a contract and run /sibyl-check
-- [ ] Run /sibyl-amend after a violation and verify contract updated
-- [ ] Run /sibyl-scan on a sample project and verify contracts generated
+- [ ] Run /themis-init and verify directory structure created
+- [ ] Run /themis-generate with a prompt and verify contract created
+- [ ] Make a change that violates a contract and run /themis-check
+- [ ] Run /themis-amend after a violation and verify contract updated
+- [ ] Run /themis-scan on a sample project and verify contracts generated
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 EOF

@@ -1,6 +1,6 @@
 ---
-name: sibyl-check
-description: Use when validating code changes against locked Sibyl QA contracts. Run before completing work, before commits, or in CI. Triggers on "check contracts", "validate contracts", "sibyl check", or when about to complete a task in a project with sibyl-qa/.
+name: themis-check
+description: Use when validating code changes against locked Themis QA contracts. Run before completing work, before commits, or in CI. Triggers on "check contracts", "validate contracts", "themis check", or when about to complete a task in a project with themis-qa/.
 ---
 
 ## Overview
@@ -11,7 +11,7 @@ Validates current code changes against all locked contracts. Reads the diff, cro
 
 ### Step 1: Load contracts
 
-- Read `sibyl-qa/INDEX.md` to get all contract paths
+- Read `themis-qa/INDEX.md` to get all contract paths
 - Read each referenced contract file
 - Filter to `status: locked` contracts only (skip draft/deprecated)
 
@@ -48,14 +48,14 @@ For each matched contract, check every clause:
 
 **No violations found:**
 ```
-✅ Sibyl: All contracts satisfied. X contracts checked, 0 violations.
+✅ Themis: All contracts satisfied. X contracts checked, 0 violations.
 ```
 
 **Violations found — format per violation:**
 ```
-⚠️ Sibyl: Contract violation detected.
+⚠️ Themis: Contract violation detected.
 
-Contract: sibyl-qa/pages/auth/login/login.contract.md
+Contract: themis-qa/pages/auth/login/login.contract.md
 Clause:   [Section] #[number] — "[clause text]"
 Priority: [critical|high|medium|low]
 
@@ -64,7 +64,7 @@ What breaks: [description of what contract clause is violated]
 
 Options:
 1. Revert this change and find another approach
-2. /sibyl-amend to propose updating the contract
+2. /themis-amend to propose updating the contract
 ```
 
 ### Step 6: Enforce based on priority

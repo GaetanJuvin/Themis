@@ -1,6 +1,6 @@
 ---
-name: sibyl-generate
-description: Use when creating a new QA contract for a page, API endpoint, component, or feature. Accepts natural language prompts, shaping documents, screenshots, or any mix. Triggers on "create contract", "add contract", "define contract", "sibyl generate".
+name: themis-generate
+description: Use when creating a new QA contract for a page, API endpoint, component, or feature. Accepts natural language prompts, shaping documents, screenshots, or any mix. Triggers on "create contract", "add contract", "define contract", "themis generate".
 ---
 
 ## Overview
@@ -11,8 +11,8 @@ Generates a `.contract.md` file from natural language input, shaping documents, 
 
 ### Step 1: Verify setup
 
-- Check that `sibyl-qa/` exists. If not: "Sibyl isn't set up yet. Run `/sibyl-init` first."
-- Read `sibyl-qa/sibyl.config.md` to get platform and conventions.
+- Check that `themis-qa/` exists. If not: "Themis isn't set up yet. Run `/themis-init` first."
+- Read `themis-qa/themis.config.md` to get platform and conventions.
 
 ### Step 2: Determine contract type
 
@@ -38,12 +38,12 @@ If the input is thin, ask follow-up questions ONE AT A TIME:
 ### Step 4: Determine path
 
 Based on contract type and platform:
-- **page (web)**: Ask for URL path → `sibyl-qa/pages/<path>/`
-- **page (mobile)**: Ask for screen route → `sibyl-qa/screens/<route>/`
-- **api**: Ask for method + endpoint → `sibyl-qa/api/<path>/<method>.contract.md`
-- **component**: Ask for name → `sibyl-qa/components/<name>.contract.md`
-- **feature**: Ask for name → `sibyl-qa/features/<name>.contract.md`
-- **global**: Ask for name → `sibyl-qa/global/<name>.contract.md`
+- **page (web)**: Ask for URL path → `themis-qa/pages/<path>/`
+- **page (mobile)**: Ask for screen route → `themis-qa/screens/<route>/`
+- **api**: Ask for method + endpoint → `themis-qa/api/<path>/<method>.contract.md`
+- **component**: Ask for name → `themis-qa/components/<name>.contract.md`
+- **feature**: Ask for name → `themis-qa/features/<name>.contract.md`
+- **global**: Ask for name → `themis-qa/global/<name>.contract.md`
 
 ### Step 5: Generate contract
 
@@ -58,7 +58,7 @@ Omit sections that don't apply (e.g., no Visual for API contracts, no Data for p
 
 ### Step 6: Update INDEX.md
 
-Add an entry to `sibyl-qa/INDEX.md` under the appropriate section.
+Add an entry to `themis-qa/INDEX.md` under the appropriate section.
 
 ### Step 7: Review and lock
 

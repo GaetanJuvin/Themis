@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
 </p>
 
-<h1 align="center">Sibyl</h1>
+<h1 align="center">Themis</h1>
 
 <p align="center">
   <strong>QA contracts for the vibe coding era.</strong><br>
@@ -25,18 +25,18 @@ When vibe coding with AI assistants, things break silently. The AI adds a featur
 
 ## The Solution
 
-Sibyl introduces **QA contracts** — human-readable documents that define what a page, feature, or API endpoint **is** and **does**. AI assistants read these contracts before making changes and stop when something would break.
+Themis introduces **QA contracts** — human-readable documents that define what a page, feature, or API endpoint **is** and **does**. AI assistants read these contracts before making changes and stop when something would break.
 
 ```
 You: "Add dark mode to the login page"
 
-AI: ⚠️ Sibyl: This change would break a locked contract.
-    Contract: sibyl-qa/pages/auth/login/login.contract.md
+AI: ⚠️ Themis: This change would break a locked contract.
+    Contract: themis-qa/pages/auth/login/login.contract.md
     Clause: Visual #3 — "Sign in primary button below fields"
     Your change removes the primary button styling.
 
     1. Find another approach
-    2. /sibyl-amend to update the contract
+    2. /themis-amend to update the contract
 ```
 
 ---
@@ -53,11 +53,11 @@ AI: ⚠️ Sibyl: This change would break a locked contract.
                                     │  - Narratives       │
                                     └────────┬────────────┘
                                              │
-                                      /sibyl-generate
+                                      /themis-generate
                                              │
                                              ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│                        sibyl-qa/                                  │
+│                        themis-qa/                                  │
 │                                                                  │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐   │
 │  │ INDEX.md      │  │ config.md    │  │ global/              │   │
@@ -80,7 +80,7 @@ AI: ⚠️ Sibyl: This change would break a locked contract.
    ┌─────────────────────┐                     ┌──────────────────────┐
    │  Layer 1: AI Guard   │                     │  Layer 2: CI Safety   │
    │                     │                     │                      │
-   │  AI reads contracts │                     │  /sibyl-check runs   │
+   │  AI reads contracts │                     │  /themis-check runs   │
    │  before changes.    │                     │  against PR diff.    │
    │  Stops on violation.│                     │  Fails build on      │
    │                     │                     │  critical violations.│
@@ -154,7 +154,7 @@ updated: 2026-03-15
 
 ```
   ┌─────────┐     lock      ┌─────────┐    violation    ┌─────────────┐
-  │  draft   │──────────────▶│  locked  │───────────────▶│  /sibyl-amend│
+  │  draft   │──────────────▶│  locked  │───────────────▶│  /themis-amend│
   └─────────┘               └─────────┘                └──────┬──────┘
        ▲                                                       │
        │                      approve                          │
@@ -191,62 +191,62 @@ Contracts are organized by scope, similar to how data contracts work in data eng
 
 ## Skills
 
-Sibyl is a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin. Everything runs as skills — no separate CLI, no build step.
+Themis is a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin. Everything runs as skills — no separate CLI, no build step.
 
-### `/sibyl-init`
+### `/themis-init`
 
-Interactive setup. Asks your platform, scaffolds the `sibyl-qa/` directory, generates config, and wires Sibyl into your `CLAUDE.md`.
+Interactive setup. Asks your platform, scaffolds the `themis-qa/` directory, generates config, and wires Themis into your `CLAUDE.md`.
 
 ```
-> /sibyl-init
+> /themis-init
 
-Sibyl: What platform(s) does this project target?
+Themis: What platform(s) does this project target?
   1. Web  2. Mobile  3. API  4. Universal
 
 You: 1
 
-Sibyl: What's your local dev URL?
+Themis: What's your local dev URL?
 You: http://localhost:3000
 
-Sibyl: ✓ Created sibyl-qa/ with config, INDEX.md, and directory structure.
-       Use /sibyl-generate to create your first contract.
+Themis: ✓ Created themis-qa/ with config, INDEX.md, and directory structure.
+       Use /themis-generate to create your first contract.
 ```
 
-### `/sibyl-generate`
+### `/themis-generate`
 
 Create contracts from anything — a prompt, a shaping document, a screenshot, or a mix.
 
 ```
-> /sibyl-generate
+> /themis-generate
 
-Sibyl: What are we contracting? (page, api, component, feature, global)
+Themis: What are we contracting? (page, api, component, feature, global)
 You: page
 
-Sibyl: Describe it, paste a brief, or reference a file/screenshot.
+Themis: Describe it, paste a brief, or reference a file/screenshot.
 You: Login page with email and password fields. Submits to POST /auth/login.
      Redirects to /dashboard on success. Shows inline error on failure.
 
-Sibyl: ✓ Generated sibyl-qa/pages/auth/login/login.contract.md (draft)
+Themis: ✓ Generated themis-qa/pages/auth/login/login.contract.md (draft)
        Lock it?
 You: yes
 ```
 
-### `/sibyl-check`
+### `/themis-check`
 
 Validate your changes against all locked contracts. Run it before committing, or let CI run it on every PR.
 
 ```
-> /sibyl-check
+> /themis-check
 
-✅ Sibyl: All contracts satisfied. 12 contracts checked, 0 violations.
+✅ Themis: All contracts satisfied. 12 contracts checked, 0 violations.
 ```
 
 ```
-> /sibyl-check
+> /themis-check
 
-⚠️ Sibyl: Contract violation detected.
+⚠️ Themis: Contract violation detected.
 
-Contract: sibyl-qa/pages/auth/login/login.contract.md
+Contract: themis-qa/pages/auth/login/login.contract.md
 Clause:   Behavior #2 — "Submitting with invalid credentials shows inline error"
 Priority: critical
 
@@ -255,19 +255,19 @@ What breaks: Contract specifies inline error, not toast.
 
 Options:
 1. Revert this change and find another approach
-2. /sibyl-amend to propose updating the contract
+2. /themis-amend to propose updating the contract
 ```
 
-### `/sibyl-amend`
+### `/themis-amend`
 
 When a violation is intentional, amend the contract instead of reverting the code.
 
 ```
-> /sibyl-amend
+> /themis-amend
 
-📝 Sibyl Amendment Proposal
+📝 Themis Amendment Proposal
 
-Contract: sibyl-qa/pages/auth/login/login.contract.md
+Contract: themis-qa/pages/auth/login/login.contract.md
 
 Current clause (Behavior #2):
   "Submitting with invalid credentials shows inline error message"
@@ -280,14 +280,14 @@ Accept this amendment? yes
 ✅ Contract amended and locked.
 ```
 
-### `/sibyl-scan`
+### `/themis-scan`
 
 Already have a codebase? Scan it to auto-generate baseline contracts.
 
 ```
-> /sibyl-scan
+> /themis-scan
 
-📋 Sibyl Scan Results
+📋 Themis Scan Results
 
 Found:
   Pages: 12     API endpoints: 8     Components: 23
@@ -316,26 +316,26 @@ Generate contracts for all, or select specific ones?
 
 ### CI Integration
 
-Add Sibyl to your GitHub Actions:
+Add Themis to your GitHub Actions:
 
 ```yaml
-# .github/workflows/sibyl.yml
-name: Sibyl Contract Check
+# .github/workflows/themis.yml
+name: Themis Contract Check
 on: [pull_request]
 jobs:
-  sibyl:
+  themis:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Sibyl Contract Check
-        run: claude --skill sibyl-check --diff ${{ github.event.pull_request.base.sha }}
+      - name: Themis Contract Check
+        run: claude --skill themis-check --diff ${{ github.event.pull_request.base.sha }}
 ```
 
 ---
 
 ## Platform Support
 
-Sibyl is stack-agnostic. The contract format works across platforms — only the directory structure adapts.
+Themis is stack-agnostic. The contract format works across platforms — only the directory structure adapts.
 
 | Platform | Structure | Visual | Behavior | Data |
 |----------|-----------|--------|----------|------|
@@ -350,13 +350,13 @@ Sibyl is stack-agnostic. The contract format works across platforms — only the
 
 ```bash
 # In Claude Code
-/plugin install sibyl
+/plugin install themis
 ```
 
 Then in any project:
 
 ```bash
-/sibyl-init
+/themis-init
 ```
 
 ---
@@ -364,24 +364,24 @@ Then in any project:
 ## Project Structure
 
 ```
-Sibyl/
+Themis/
 ├── .claude-plugin/          # Claude Code plugin config
 │   ├── plugin.json
 │   └── hooks.json
-├── skills/                  # Sibyl skills (the AI logic)
-│   ├── sibyl-init/
-│   ├── sibyl-generate/
-│   ├── sibyl-check/
-│   ├── sibyl-amend/
-│   └── sibyl-scan/
+├── skills/                  # Themis skills (the AI logic)
+│   ├── themis-init/
+│   ├── themis-generate/
+│   ├── themis-check/
+│   ├── themis-amend/
+│   └── themis-scan/
 ├── commands/                # User-facing slash commands
-│   ├── sibyl-init.md
-│   ├── sibyl-generate.md
-│   ├── sibyl-check.md
-│   ├── sibyl-amend.md
-│   └── sibyl-scan.md
-├── templates/               # Templates used by /sibyl-init
-│   ├── sibyl.config.md
+│   ├── themis-init.md
+│   ├── themis-generate.md
+│   ├── themis-check.md
+│   ├── themis-amend.md
+│   └── themis-scan.md
+├── templates/               # Templates used by /themis-init
+│   ├── themis.config.md
 │   ├── INDEX.md
 │   └── contract.template.md
 └── docs/plans/              # Design docs
@@ -397,10 +397,10 @@ Sibyl/
 
 **Defense in depth.** AI reads contracts before coding (guardrail). CI checks contracts after coding (safety net). Two layers, one source of truth.
 
-**Amend, don't fight.** When you intentionally change something, Sibyl doesn't block you — it asks you to update the contract. The contract evolves with your app.
+**Amend, don't fight.** When you intentionally change something, Themis doesn't block you — it asks you to update the contract. The contract evolves with your app.
 
 ---
 
 <p align="center">
-  <em>Sibyl — the oracle that knows what shouldn't change.</em>
+  <em>Themis — divine law for your codebase.</em>
 </p>

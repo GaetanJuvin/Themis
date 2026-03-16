@@ -1,6 +1,6 @@
 ---
-name: sibyl-scan
-description: Use when generating baseline QA contracts from an existing codebase. Scans code to identify pages, API endpoints, and components, then generates draft contracts. Triggers on "scan codebase", "generate baseline contracts", "sibyl scan".
+name: themis-scan
+description: Use when generating baseline QA contracts from an existing codebase. Scans code to identify pages, API endpoints, and components, then generates draft contracts. Triggers on "scan codebase", "generate baseline contracts", "themis scan".
 ---
 
 ## Overview
@@ -11,8 +11,8 @@ Auto-generates draft contracts by scanning the existing codebase. Identifies pag
 
 ### Step 1: Verify setup
 
-- Check that `sibyl-qa/` exists. If not: "Sibyl isn't set up yet. Run `/sibyl-init` first."
-- Read `sibyl-qa/sibyl.config.md` to get platform and conventions.
+- Check that `themis-qa/` exists. If not: "Themis isn't set up yet. Run `/themis-init` first."
+- Read `themis-qa/themis.config.md` to get platform and conventions.
 
 ### Step 2: Scan the codebase
 
@@ -39,7 +39,7 @@ Based on platform, look for:
 Show what was found:
 
 ```
-📋 Sibyl Scan Results
+📋 Themis Scan Results
 
 Found:
   Pages: 12
@@ -66,7 +66,7 @@ For each selected item:
    - Data: API calls, request/response shapes, props
    - Rules: Infer MUST/MUST NOT from critical paths (auth, payments, etc.)
 3. Generate `.contract.md` as `status: draft`
-4. Update `sibyl-qa/INDEX.md`
+4. Update `themis-qa/INDEX.md`
 
 ### Step 5: Review cycle
 

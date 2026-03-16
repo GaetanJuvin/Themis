@@ -1,8 +1,8 @@
-# Sibyl — QA Contract Framework
+# Themis — QA Contract Framework
 
 ## Overview
 
-Sibyl is a stack-agnostic QA contract framework that protects pages, features, and components from unintended changes during AI-assisted (vibe) coding. Inspired by data contracts in data engineering, Sibyl defines what a page or feature IS — visually, behaviorally, and in terms of data — and ensures AI assistants and CI pipelines respect those contracts.
+Themis is a stack-agnostic QA contract framework that protects pages, features, and components from unintended changes during AI-assisted (vibe) coding. Inspired by data contracts in data engineering, Themis defines what a page or feature IS — visually, behaviorally, and in terms of data — and ensures AI assistants and CI pipelines respect those contracts.
 
 ## Core Concepts
 
@@ -29,8 +29,8 @@ draft → locked → (violation detected) → amend proposed → draft → locke
 ## Directory Structure
 
 ```
-sibyl-qa/
-├── sibyl.config.md              # Project config (platform, settings)
+themis-qa/
+├── themis.config.md              # Project config (platform, settings)
 ├── INDEX.md                     # Maps paths → contract files
 ├── global/                      # App-wide contracts
 │   ├── navigation.contract.md
@@ -68,7 +68,7 @@ Contracts cascade: a page contract can reference component contracts, and global
 The index acts as a routing table mapping paths to contracts:
 
 ```markdown
-# Sibyl Contract Index
+# Themis Contract Index
 
 ## Pages
 - `/auth/login` → [pages/auth/login/login.contract.md]
@@ -163,11 +163,11 @@ updated: 2026-03-15
 
 ## Config File
 
-`sibyl-qa/sibyl.config.md`:
+`themis-qa/themis.config.md`:
 
 ```markdown
 ---
-name: Sibyl QA
+name: Themis QA
 version: 1.0
 ---
 
@@ -192,27 +192,27 @@ version: 1.0
 
 Instructions for AI assistants working in this codebase:
 
-- Always read `sibyl-qa/INDEX.md` before making changes
+- Always read `themis-qa/INDEX.md` before making changes
 - Cross-reference modified files against contract paths
-- Never modify a locked contract without running `/sibyl-amend`
+- Never modify a locked contract without running `/themis-amend`
 - When generating new contracts, always update `INDEX.md`
 ```
 
 ## Skills
 
-### /sibyl-init
+### /themis-init
 
 Interactive project setup.
 
 1. Asks platform type (web, mobile, api, universal)
 2. Asks local dev URL
 3. Asks shaping doc path
-4. Scaffolds `sibyl-qa/` directory structure
-5. Generates `sibyl.config.md`
+4. Scaffolds `themis-qa/` directory structure
+5. Generates `themis.config.md`
 6. Creates empty `INDEX.md`
-7. Adds Sibyl instructions to `CLAUDE.md`
+7. Adds Themis instructions to `CLAUDE.md`
 
-### /sibyl-generate
+### /themis-generate
 
 Creates a contract from natural language input.
 
@@ -230,7 +230,7 @@ Creates a contract from natural language input.
 5. Presents draft for review
 6. Locks on approval
 
-### /sibyl-scan
+### /themis-scan
 
 Auto-generates baseline contracts from existing app/code.
 
@@ -239,7 +239,7 @@ Auto-generates baseline contracts from existing app/code.
 3. Generates draft contracts for each
 4. Developer reviews, refines, and locks
 
-### /sibyl-check
+### /themis-check
 
 Validates current changes against locked contracts.
 
@@ -259,7 +259,7 @@ Validates current changes against locked contracts.
 | `medium` | Warning + propose amend | Warning in PR comment |
 | `low` | Silent | Info in PR comment |
 
-### /sibyl-amend
+### /themis-amend
 
 Proposes a contract update after a violation is flagged.
 
@@ -275,14 +275,14 @@ Proposes a contract update after a violation is flagged.
 
 When the developer is vibe coding, the AI assistant:
 
-1. **On session start** — reads `sibyl-qa/INDEX.md` to know which contracts exist
+1. **On session start** — reads `themis-qa/INDEX.md` to know which contracts exist
 2. **Before modifying files** — cross-references the file being changed against relevant contracts
 3. **On violation detected** — stops and flags:
 
 ```
-⚠️ Sibyl: This change would break a locked contract.
+⚠️ Themis: This change would break a locked contract.
 
-Contract: sibyl-qa/pages/auth/login/login.contract.md
+Contract: themis-qa/pages/auth/login/login.contract.md
 Clause:   Behavior #2 — "Submitting with invalid credentials shows inline error"
 Priority: critical
 
@@ -290,7 +290,7 @@ Your change removes the inline error in favor of a toast notification.
 
 Options:
 1. Revert this change and find another approach
-2. /sibyl-amend to propose updating the contract
+2. /themis-amend to propose updating the contract
 ```
 
 ### Layer 2: CI Safety Net
@@ -298,21 +298,21 @@ Options:
 A CI step that validates contracts against the PR diff:
 
 ```yaml
-# .github/workflows/sibyl.yml
-name: Sibyl Contract Check
+# .github/workflows/themis.yml
+name: Themis Contract Check
 on: [pull_request]
 jobs:
-  sibyl:
+  themis:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Sibyl Contract Check
-        run: claude --skill sibyl-check --diff ${{ github.event.pull_request.base.sha }}
+      - name: Themis Contract Check
+        run: claude --skill themis-check --diff ${{ github.event.pull_request.base.sha }}
 ```
 
 ## Contract Generation Inputs
 
-Sibyl accepts multiple input formats for contract generation:
+Themis accepts multiple input formats for contract generation:
 
 1. **Natural language prompt** — "Login page with email/password, calls POST /auth/login"
 2. **Narrative brief** — plain English document describing the page/feature
@@ -324,10 +324,10 @@ All inputs are interpreted by the AI and translated into the structured contract
 
 ## Platform Support
 
-Sibyl is stack-agnostic. The contract format is identical across platforms. What changes is:
+Themis is stack-agnostic. The contract format is identical across platforms. What changes is:
 
 - **Web**: `pages/` organized by URL path, visual contracts reference DOM/CSS
 - **Mobile**: `screens/` organized by route, visual contracts reference native components
 - **API**: `api/` organized by endpoint and method, no visual section
 
-The platform is set in `sibyl.config.md` and determines which top-level folders are scaffolded by `/sibyl-init`.
+The platform is set in `themis.config.md` and determines which top-level folders are scaffolded by `/themis-init`.

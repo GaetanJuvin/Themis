@@ -1,5 +1,5 @@
 ---
-name: Sibyl QA
+name: Themis QA
 version: 1.0
 ---
 
@@ -24,7 +24,7 @@ version: 1.0
 
 Instructions for AI assistants working in this codebase:
 
-- Always read `sibyl-qa/INDEX.md` before making changes
+- Always read `themis-qa/INDEX.md` before making changes
 - Cross-reference modified files against contract paths
-- Never modify a locked contract without running `/sibyl-amend`
+- Never modify a locked contract without running `/themis-amend`
 - When generating new contracts, always update `INDEX.md`
