@@ -24,7 +24,8 @@ version: 1.0
 
 Instructions for AI assistants working in this codebase:
 
-- Always read `themis-qa/INDEX.md` before making changes
+- **Always load `themis-qa/INDEX.md` first** to know which contracts exist
+- Read the relevant contract files for any page/feature you're about to modify
 - Cross-reference modified files against contract paths
 - Never modify a locked contract without running `/themis-amend`
 - When generating new contracts, always update `INDEX.md`

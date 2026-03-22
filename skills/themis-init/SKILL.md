@@ -74,7 +74,8 @@ Interactive setup that scaffolds the `themis-qa/` directory structure in the cur
 
    This project uses Themis QA contracts. Before making changes:
 
-   - Read `themis-qa/INDEX.md` to know which contracts exist
+   - **Always load `themis-qa/INDEX.md` first** to know which contracts exist
+   - Read the relevant contract files for any page/feature you're about to modify
    - Cross-reference modified files against contract paths
    - Never modify a locked contract without running `/themis-amend`
    - If your change would break a locked contract, stop and flag it
